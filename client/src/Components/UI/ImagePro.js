@@ -15,7 +15,6 @@ const useStyles = makeStyles({
     },
 });
 export default function ImagePro({ file }) {
-    console.log(file)
     const classes = useStyles();
     return (
         <TableContainer component={Paper}>
@@ -31,7 +30,7 @@ export default function ImagePro({ file }) {
                         <TableCell component="th" scope="row">
                             Size
                     </TableCell>
-                        <TableCell align="right">{file.size}</TableCell>
+                        <TableCell align="right">{bytesToSize(file.size)}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell component="th" scope="row">
@@ -56,3 +55,12 @@ export default function ImagePro({ file }) {
         </TableContainer >
     )
 }
+
+
+function bytesToSize(bytes) {
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes == 0) return 'n/a';
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+    if (i == 0) return bytes + ' ' + sizes[i];
+    return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
+};
