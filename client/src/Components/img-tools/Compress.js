@@ -3,11 +3,20 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
 import Container from '@material-ui/core/Container'
+import Backdrop from '@material-ui/core/Backdrop';
 import ImagePro from '../UI/ImagePro';
 import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core/styles';
+import magik from '../../assets/15115-document-preview.gif'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+}));
 
 export default function Compress() {
     const [imgSrc, setimgSrc] = useState('')
@@ -22,9 +31,12 @@ export default function Compress() {
     const [file, setfile] = useState(null)
     const [modFile, setmodFile] = useState(null)
     const [fileName, setfileName] = useState(null)
-
+    const [open, setOpen] = useState(false)
+    const [uploading, setuploading] = useState(false)
+    const classes = useStyles();
 
     const handleUpload = (e) => {
+        setuploading(true)
         let imgFile = e.target.files[0]
         let form_data = new FormData();
         form_data.append('image', imgFile);
@@ -44,6 +56,9 @@ export default function Compress() {
                     settype(res.data.file.extension)
                     setfile(res.data.file)
                     setfileName(res.data.file.fileName)
+                    setTimeout(() => {
+                        setuploading(false)
+                    }, 400);
                 }
             })
             .catch(err => console.log(err))
@@ -69,6 +84,7 @@ export default function Compress() {
             .catch(err => console.log(err))
     }
     const compressImage = () => {
+        setOpen(true)
         axios({
             method: 'post',
             url: '/api/compress',
@@ -84,6 +100,9 @@ export default function Compress() {
                     setmodW(res.data.file.dimensions.width)
                     setmodS(res.data.file.size)
                     setmodFile(res.data.file)
+                    setTimeout(() => {
+                        setOpen(false)
+                    }, 4000);
                 }
             })
             .catch(err => console.log(err))
@@ -95,6 +114,9 @@ export default function Compress() {
         downloadLink.download = 'sample';
         downloadLink.click();
     }
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <Wrapper maxWidth="md">
@@ -145,6 +167,13 @@ export default function Compress() {
                     )}
                 </Grid>
             </Grid>
+            <Backdrop className={classes.backdrop} open={open}>
+                <img src={magik} alt="" />
+
+            </Backdrop>
+            <Backdrop className={classes.backdrop} open={uploading}>
+                <CircularProgress color="primary" />
+            </Backdrop>
         </Wrapper>
     )
 }
