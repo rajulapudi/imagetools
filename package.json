@@ -1,11 +1,11 @@
 {
-  "name": "imgM",
+  "name": "imgtools",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node ./server/bin/www",
+    "start": "npm install --prefix server && node ./server/bin/www",
     "client": "npm start --prefix client",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
