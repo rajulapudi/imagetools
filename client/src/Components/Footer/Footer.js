@@ -16,11 +16,11 @@ export default function Footer() {
     return (
         <footer className={classes.footer}>
             <Typography variant="h6" align="center" gutterBottom>
-                Footer
+                Image Tools
 </Typography>
-            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+            {/* <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
                 Something here to give the footer a purpose!
-</Typography>
+</Typography> */}
             <Copyright />
         </footer>
     )
@@ -30,9 +30,9 @@ export default function Footer() {
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright Â© '}
+            {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+                Image Tools
       </Link>{' '}
             {new Date().getFullYear()}
             {'.'}

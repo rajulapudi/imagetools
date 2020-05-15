@@ -3,11 +3,11 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
-import Container from '@material-ui/core/Container'
 import ImagePro from '../UI/ImagePro';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { Wrapper } from './Compress'
 
 export default function Resize() {
     const [imgSrc, setimgSrc] = useState('')
@@ -84,10 +84,15 @@ export default function Resize() {
 
 
     return (
-        <Container maxWidth="md">
+        <Wrapper maxWidth="md">
             <div style={{ marginTop: '30px' }}>
-                <Grid container direction="row">
-                    <input type="file" id="img" name="img" accept="image/*" onChange={(e) => handleUpload(e)} />
+                <Grid container direction="row" justify="center"
+                    alignItems="center">
+                    <div class='file-input'>
+                        <input type='file' id="img" name="img" accept="image/*" onChange={(e) => handleUpload(e)} />
+                        <span class='button'>Choose Image</span>
+                        <span class='label' data-js-label>No File Chosen</span>
+                    </div>
                 </Grid>
                 <Grid container direction="row">
                     <Grid item sm={6}>
@@ -112,46 +117,45 @@ export default function Resize() {
                     <Grid item sm={6}> {modFile && (<ImagePro file={modFile} />)}</Grid>
                 </Grid>
                 <Grid container direction="row" justify="space-between" style={{ margin: '10px' }}>
-
-                    <Grid>
-                        <FormHelperText>Width</FormHelperText>
-                        <TextField
-                            id="outlined-name"
-                            value={width}
-                            onChange={handleWidthChange}
-                            variant="outlined"
-                            color="primary"
-                        />
-                    </Grid>
-                    <Grid>
-                        <FormHelperText>Height</FormHelperText>
-                        <TextField
-                            id="outlined-uncontrolled"
-                            value={height}
-                            onChange={(e) => setHeight(e.target.value)}
-                            variant="outlined"
-                            disabled={aspect}
-                            color="secondary"
-                        /></Grid>
-                    <Grid>
-                        <FormHelperText>To Maintain aspect ratio height adjustment is disabled </FormHelperText>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={aspect}
-                                    onChange={(e) => setAspect(e.target.checked)}
-                                    inputProps={{ 'aria-label': 'primary checkbox' }}
-                                />}
-                            label="Maintain Aspect Ratio"
-                        />
-                    </Grid>
-
-
+                    {file && (<>
+                        <Grid>
+                            <FormHelperText>Width</FormHelperText>
+                            <TextField
+                                id="outlined-name"
+                                value={width}
+                                onChange={handleWidthChange}
+                                variant="outlined"
+                                color="primary"
+                            />
+                        </Grid>
+                        <Grid>
+                            <FormHelperText>Height</FormHelperText>
+                            <TextField
+                                id="outlined-uncontrolled"
+                                value={height}
+                                onChange={(e) => setHeight(e.target.value)}
+                                variant="outlined"
+                                disabled={aspect}
+                                color="secondary"
+                            /></Grid>
+                        <Grid>
+                            <FormHelperText>To Maintain aspect ratio height adjustment is disabled </FormHelperText>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={aspect}
+                                        onChange={(e) => setAspect(e.target.checked)}
+                                        inputProps={{ 'aria-label': 'primary checkbox' }}
+                                    />}
+                                label="Maintain Aspect Ratio"
+                            />
+                        </Grid>
+                    </>)}
                 </Grid>
                 <Grid container direction="row">
-                    <Button variant="contained" color="primary" onClick={resizeImage}>
+                    {file && (<Button variant="contained" color="primary" onClick={resizeImage}>
                         Resize
-                        </Button>
+                    </Button>)}
                     {modSrc && (<>
                         <a href={modSrc} download={`${file.fileName}-mod.${file.extension}`}>
                             <Button variant="outlined" color="secondary" >
@@ -161,6 +165,6 @@ export default function Resize() {
                     </>)}
                 </Grid>
             </div>
-        </Container >
+        </Wrapper >
     )
 }

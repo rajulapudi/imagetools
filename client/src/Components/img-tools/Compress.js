@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
 import Container from '@material-ui/core/Container'
 import ImagePro from '../UI/ImagePro';
+import styled from 'styled-components'
 
 
 
@@ -96,21 +97,27 @@ export default function Compress() {
     }
 
     return (
-        <Container maxWidth="md">
-            <div style={{ marginTop: '30px' }}>
-                <Grid container direction="row">
-                    <input type="file" id="img" name="img" accept="image/*" onChange={(e) => handleUpload(e)} />
+        <Wrapper maxWidth="md">
+            <Grid style={{ marginTop: '30px' }} justify="center"
+                alignItems="center">
+                <Grid container direction="row" justify="center"
+                    alignItems="center">
+                    <div class='file-input'>
+                        <input type='file' id="img" name="img" accept="image/*" onChange={(e) => handleUpload(e)} />
+                        <span class='button'>Choose Image</span>
+                        <span class='label' data-js-label>No File Chosen</span>
+                    </div>
                 </Grid>
-                <Grid container direction="row">
+                <Grid container direction="row" >
                     {imgSrc && (
-                        <Grid>
+                        <Grid item sm={6}>
                             <h5>Original Image</h5>
                             <img src={imgSrc} width={200} />
                             {file && (<ImagePro file={file} />)}
                         </Grid>
                     )}
                     {modSrc && (
-                        <Grid>
+                        <Grid item sm={6}>
                             <h5>Processed Image</h5>
                             <img src={modSrc} width={200} />
                             {modFile && (<ImagePro file={modFile} />)}
@@ -118,20 +125,77 @@ export default function Compress() {
                     )}
                 </Grid>
                 <Grid container direction="row">
-                    <Button variant="contained" color="primary" onClick={compressImage}>
-                        Compress
-                        </Button>
-                    {modSrc && (<><Button variant="contained" color="primary" onClick={reCompressImage}>
-                        Achieve Further Compression
+                    {imgSrc && (
+                        <Grid item sm={6}>
+                            <Button variant="contained" color="primary" onClick={compressImage}>
+                                Compress
                     </Button>
+                        </Grid>
+                    )}
+                    {modSrc && (<Grid item sm={6}>
+                        <Button variant="contained" color="primary" onClick={reCompressImage}>
+                            Achieve Further Compression
+                        </Button>
                         <a href={modSrc} download={`${file.fileName}-mod.${file.extension}`}>
                             <Button variant="outlined" color="secondary" >
                                 Download
-                    </Button>
+                        </Button>
                         </a>
-                    </>)}
+                    </Grid>
+                    )}
                 </Grid>
-            </div>
-        </Container >
+            </Grid>
+        </Wrapper>
     )
 }
+
+export const Wrapper = styled(Container)`
+text-align: center;
+margin-top: 80px;
+.file-input {
+    display: inline-block;
+    text-align: left;
+    background: #fff;
+    padding: 16px;
+    width: 450px;
+    position: relative;
+    border-radius: 3px;
+  }
+  
+  .file-input > [type='file'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 10;
+    cursor: pointer;
+  }
+  
+  .file-input > .button {
+    display: inline-block;
+    cursor: pointer;
+    background: dodgerblue;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 2px;
+    margin-right: 8px;
+  }
+  
+  .file-input:hover > .button {
+    background: #eee;
+    color: dodgerblue;
+   
+  }
+  
+  .file-input > .label {
+    color: #333;
+    white-space: nowrap;
+    opacity: .3;
+  }
+  
+  .file-input.-chosen > .label {
+    opacity: 1;
+  }
+`

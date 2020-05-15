@@ -8,6 +8,7 @@ import ImagePro from '../UI/ImagePro';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { Wrapper } from './Compress'
 
 export default function Resize() {
     const [imgSrc, setimgSrc] = useState('')
@@ -74,10 +75,15 @@ export default function Resize() {
 
 
     return (
-        <Container maxWidth="md">
+        <Wrapper maxWidth="md">
             <div style={{ marginTop: '30px' }}>
-                <Grid container direction="row">
-                    <input type="file" id="img" name="img" accept="image/*" onChange={(e) => handleUpload(e)} />
+                <Grid container direction="row" justify="center"
+                    alignItems="center">
+                    <div class='file-input'>
+                        <input type='file' id="img" name="img" accept="image/*" onChange={(e) => handleUpload(e)} />
+                        <span class='button'>Choose Image</span>
+                        <span class='label' data-js-label>No File Chosen</span>
+                    </div>
                 </Grid>
                 <Grid container direction="row">
                     <Grid item sm={6}>
@@ -103,9 +109,11 @@ export default function Resize() {
                 </Grid>
 
                 <Grid container direction="row">
-                    <Button variant="contained" color="primary" onClick={toWebp}>
-                        Convert to Webp
+                    {file && (
+                        <Button variant="contained" color="primary" onClick={toWebp}>
+                            Convert to Webp
                         </Button>
+                    )}
                     {modSrc && (<>
                         <a href={modSrc} download={`${file.fileName}-mod.${file.extension}`}>
                             <Button variant="outlined" color="secondary" >
@@ -115,6 +123,6 @@ export default function Resize() {
                     </>)}
                 </Grid>
             </div>
-        </Container >
+        </Wrapper >
     )
 }

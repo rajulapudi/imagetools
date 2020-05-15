@@ -14,10 +14,9 @@ export default function NavBar() {
     const classes = useStyles();
     return (
         <AppBar position="relative">
-            <Toolbar>
-                <CameraIcon className={classes.icon} />
+            <Toolbar >
                 <Typography variant="h6" color="inherit" noWrap>
-                    Album layout
+                    Image Tools
   </Typography>
             </Toolbar>
         </AppBar>

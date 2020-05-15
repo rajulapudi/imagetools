@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import ImagePro from '../UI/ImagePro';
+import { Wrapper } from './Compress'
 
 export default function Editor() {
     const [open, setopen] = useState(false)
@@ -34,12 +35,17 @@ export default function Editor() {
             .catch(err => console.log(err))
     };
     return (
-        <div>
-            <h1>Image Editor</h1>
-            <Grid container direction="row">
-                <input type="file" id="img" name="img" accept="image/*" onChange={(e) => handleUpload(e)} />
+        <Wrapper>
+            <Grid container direction="row" justify="center"
+                alignItems="center">
+                <div class='file-input'>
+                    <input type='file' id="img" name="img" accept="image/*" onChange={(e) => handleUpload(e)} />
+                    <span class='button'>Choose Image</span>
+                    <span class='label' data-js-label>No File Chosen</span>
+                </div>
             </Grid>
-            <Grid container direction="row">
+            <Grid container direction="row" justify="center"
+                alignItems="center">
                 {imgSrc && (
                     <Grid>
                         <h5>Original Image</h5>
@@ -48,15 +54,16 @@ export default function Editor() {
                     </Grid>
                 )}
             </Grid>
-            <Button variant="contained" color="primary" onClick={() => setopen(true)}>
-                Edit Image
-            </Button>
+            {imgSrc && (
+                <Button variant="contained" color="primary" onClick={() => setopen(true)}>
+                    Crop Image
+                </Button>)}
             <FilerobotImageEditor
                 show={open}
                 src={imgSrc}
                 onClose={() => setopen(false)}
                 config={config}
             />
-        </div>
+        </Wrapper>
     )
 }

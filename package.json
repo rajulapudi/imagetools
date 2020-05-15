@@ -1,0 +1,24 @@
+{
+  "name": "imgM",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node ./server/bin/www",
+    "client": "npm start --prefix client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajulapudi/imagetools.git"
+  },
+  "keywords": [],
+  "author": "Mohan Praneeth Rajulapudi <rajulapudip@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rajulapudi/imagetools/issues"
+  },
+  "homepage": "https://github.com/rajulapudi/imagetools#readme"
+}

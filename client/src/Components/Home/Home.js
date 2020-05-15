@@ -19,48 +19,67 @@ const useStyles = makeStyles((theme) => ({
     heroButtons: {
         marginTop: theme.spacing(4),
     },
+    cardGrid: {
+        padding: theme.spacing(2),
+    }
 }));
 
 const cards = [
     {
         toolName: 'compress',
         desc: 'compress images to desired file size',
-        url: 'compress'
+        url: 'compress',
+        src: 'compress.png',
+        hover: 'compressH.png'
     },
     {
         toolName: 'resize',
         desc: 'compress images to desired file Dimensions',
-        url: 'resize'
+        url: 'resize',
+        src: 'resize.png',
+        hover: 'resizeH.png'
     },
     {
         toolName: 'crop',
         desc: 'crop images to desired pixels',
-        url: 'crop'
+        url: 'crop',
+        src: 'crop.png',
+        hover: 'cropH.png'
     },
     {
         toolName: 'convert',
         desc: 'convert images to desired formats',
-        url: 'convert'
+        url: 'convert',
+        src: 'convert.png',
+        hover: 'convertH.png'
     },
     {
         toolName: 'Image Editor',
         desc: 'Edit images ',
-        url: 'image-editor'
+        url: 'image-editor',
+        src: 'image.png',
+        hover: 'imageH.png'
     },
     {
         toolName: 'Watermark',
         desc: 'Watermark images ',
-        url: 'watermark'
+        url: 'watermark',
+        src: 'stamp.png',
+        hover: 'stampH.png'
     },
     {
         toolName: 'Rotate Image',
         desc: 'Rotate images ',
-        url: 'rotate'
+        url: 'rotate',
+        src: 'rotate.png',
+        hover: 'rotateH.png'
     },
     {
         toolName: 'Convert to WebP',
         desc: "Google's WebP images",
-        url: 'convert-webp'
+        url: 'convert-webp',
+        src: 'convert.png',
+        hover: 'convertH.png'
     },
 ];
 
@@ -75,11 +94,8 @@ export default function Home() {
                 {/* Hero unit */}
                 <div className={classes.heroContent}>
                     <Container maxWidth="sm">
-                        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                            Image Formater
-            </Typography>
                         <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                            Covert various image formats and sizes to your desired Image
+                            Optimize Images
             </Typography>
 
                     </Container>
