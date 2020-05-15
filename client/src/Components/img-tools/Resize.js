@@ -8,7 +8,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { Wrapper } from './Compress'
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@material-ui/core/Backdrop';
 
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+}));
 export default function Resize() {
     const [imgSrc, setimgSrc] = useState('')
     const [modSrc, setmodSrc] = useState('')
@@ -20,9 +29,12 @@ export default function Resize() {
     const [height, setHeight] = useState(null)
     const [aspect, setAspect] = useState(true)
     const [initialAspect, setInitialAspect] = useState(0)
+    const [backdrop, setbackdrop] = useState(false)
 
+    const classes = useStyles();
 
     const handleUpload = (e) => {
+        setbackdrop(true)
         let imgFile = e.target.files[0]
         let form_data = new FormData();
         form_data.append('image', imgFile);
@@ -41,6 +53,9 @@ export default function Resize() {
                     setWidth(res.data.file.dimensions.width)
                     setHeight(res.data.file.dimensions.height)
                     setInitialAspect(res.data.file.dimensions.width / res.data.file.dimensions.height)
+                    setTimeout(() => {
+                        setbackdrop(false)
+                    }, 400);
                 }
             })
             .catch(err => console.log(err))
@@ -165,6 +180,9 @@ export default function Resize() {
                     </>)}
                 </Grid>
             </div>
+            <Backdrop className={classes.backdrop} open={backdrop}>
+                <CircularProgress color="primary" />
+            </Backdrop>
         </Wrapper >
     )
 }

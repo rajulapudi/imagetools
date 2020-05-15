@@ -95,9 +95,7 @@ export default function Compress() {
         downloadLink.download = 'sample';
         downloadLink.click();
     }
-    const handleClose = () => {
-        setOpen(false);
-    };
+
 
     return (
         <Wrapper maxWidth="md">

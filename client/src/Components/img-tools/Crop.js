@@ -5,16 +5,34 @@ import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import ImagePro from '../UI/ImagePro';
 import { Wrapper } from './Compress'
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@material-ui/core/Backdrop';
+
+
+
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+}));
 
 export default function Editor() {
     const [open, setopen] = useState(false)
     const [imgSrc, setimgSrc] = useState(null)
     const [file, setfile] = useState(null)
     const [fileName, setfileName] = useState(null)
+    const [backdrop, setbackdrop] = useState(false)
+
     const config = {
         tools: ['crop'],
     }
+
+    const classes = useStyles();
+
     const handleUpload = (e) => {
+        setbackdrop(true)
         let imgFile = e.target.files[0]
         let form_data = new FormData();
         form_data.append('image', imgFile);
@@ -30,6 +48,9 @@ export default function Editor() {
                     setimgSrc(res.data.file.url)
                     setfile(res.data.file)
                     setfileName(res.data.file.fileName)
+                    setTimeout(() => {
+                        setbackdrop(false)
+                    }, 400);
                 }
             })
             .catch(err => console.log(err))
@@ -64,6 +85,9 @@ export default function Editor() {
                 onClose={() => setopen(false)}
                 config={config}
             />
+            <Backdrop className={classes.backdrop} open={backdrop}>
+                <CircularProgress color="primary" />
+            </Backdrop>
         </Wrapper>
     )
 }
