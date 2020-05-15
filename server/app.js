@@ -26,7 +26,7 @@ app.use('/upload', express.static(path.join(__dirname, 'uploads')));
 // catch 404 and forward to error handler
 
 
-const root = require('path').join(__dirname, '../client', 'dist');
+const root = require('path').join(__dirname, '../client', 'build');
 app.use(express.static(root));
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root });
